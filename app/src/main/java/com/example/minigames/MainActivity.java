@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.minigames.Fragments.StartFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Button logout;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    TextView tictactoe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +39,25 @@ public class MainActivity extends AppCompatActivity {
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
+
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SignOut();
             }
         });
+
+        tictactoe.findViewById(R.id.TicTacToe);
+
+        tictactoe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, StartFragment.class));
+            }
+        });
+
+
     }
 
     private void SignOut() {

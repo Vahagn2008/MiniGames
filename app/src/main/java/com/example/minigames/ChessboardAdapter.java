@@ -20,15 +20,26 @@ import java.util.ArrayList;
 
 public class ChessboardAdapter  extends RecyclerView.Adapter<ChessboardAdapter.ViewHolder>{
     private Context context;
-    private ArrayList<Bitmap> arrBms;
+    private ArrayList<Bitmap> arrBms, arrStrokes;
     private Bitmap bmX,bmO;
-    private Animation anim_x_o;
+    private Animation anim_x_o, anim_stroke;
 
     public ChessboardAdapter(Context context, ArrayList<Bitmap> arrBms) {
         this.context = context;
         this.arrBms = arrBms;
         bmO = BitmapFactory.decodeResource(context.getResources(), R.drawable.o);
         bmX = BitmapFactory.decodeResource(context.getResources(), R.drawable.x);
+        arrStrokes = new ArrayList<>();
+        arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke1));
+        arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke2));
+        arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke3));
+        arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke4));
+        arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke5));
+        arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke6));
+        arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke7));
+        arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke8));
+        anim_stroke = AnimationUtils.loadAnimation(context, R.anim.anim_stroke);
+        GameFragment.img_stroke.setAnimation(anim_stroke);
     }
 
     @NonNull
@@ -45,7 +56,7 @@ public class ChessboardAdapter  extends RecyclerView.Adapter<ChessboardAdapter.V
         holder.img_cell_chessboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(arrBms.get(position)==null){
+                if(arrBms.get(position)==null&&!checkwin()){
                     if(GameFragment.turnO){
                         arrBms.set(position, bmO);
                         GameFragment.turnO = false;
@@ -56,10 +67,46 @@ public class ChessboardAdapter  extends RecyclerView.Adapter<ChessboardAdapter.V
                         GameFragment.txt_turn.setText("turn of O");
                     }
                     holder.img_cell_chessboard.setAnimation(anim_x_o);
+                    if (checkwin()){
+                        win();
+                    }
                     notifyItemChanged(position);
                 }
             }
         });
+    }
+
+    private void win() {
+        GameFragment.img_stroke.startAnimation(anim_stroke);
+    }
+
+    private boolean checkwin() {
+        if (arrBms.get(0)==arrBms.get(3)&&arrBms.get(3)==arrBms.get(6)&&arrBms.get(0)!=null){
+            GameFragment.img_stroke.setImageBitmap(arrStrokes.get(2));
+            return true;
+        }else if (arrBms.get(1)==arrBms.get(4)&&arrBms.get(4)==arrBms.get(7)&&arrBms.get(1)!=null){
+            GameFragment.img_stroke.setImageBitmap(arrStrokes.get(3));
+            return true;
+        }else if (arrBms.get(2)==arrBms.get(5)&&arrBms.get(5)==arrBms.get(8)&&arrBms.get(2)!=null){
+            GameFragment.img_stroke.setImageBitmap(arrStrokes.get(4));
+            return true;
+        }else if (arrBms.get(0)==arrBms.get(1)&&arrBms.get(1)==arrBms.get(2)&&arrBms.get(0)!=null){
+            GameFragment.img_stroke.setImageBitmap(arrStrokes.get(5));
+            return true;
+        }else if (arrBms.get(3)==arrBms.get(4)&&arrBms.get(4)==arrBms.get(5)&&arrBms.get(3)!=null){
+            GameFragment.img_stroke.setImageBitmap(arrStrokes.get(6));
+            return true;
+        }else if (arrBms.get(6)==arrBms.get(7)&&arrBms.get(7)==arrBms.get(8)&&arrBms.get(6)!=null){
+            GameFragment.img_stroke.setImageBitmap(arrStrokes.get(7));
+            return true;
+        }else if (arrBms.get(0)==arrBms.get(4)&&arrBms.get(4)==arrBms.get(8)&&arrBms.get(0)!=null){
+            GameFragment.img_stroke.setImageBitmap(arrStrokes.get(1));
+            return true;
+        }else if (arrBms.get(2)==arrBms.get(4)&&arrBms.get(4)==arrBms.get(6)&&arrBms.get(2)!=null){
+            GameFragment.img_stroke.setImageBitmap(arrStrokes.get(0));
+            return true;
+        }
+        return false;
     }
 
     @Override

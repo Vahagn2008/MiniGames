@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.minigames.ChessboardAdapter;
@@ -26,6 +27,7 @@ public class GameFragment extends Fragment {
     public static boolean turnO = true;
     public static TextView txt_turn;
     private Button btn_reset;
+    public static ImageView img_stroke;
 
 
     @Override
@@ -35,6 +37,7 @@ public class GameFragment extends Fragment {
         rv_chessboard = view.findViewById(R.id.rv_chessboard);
         txt_turn = view.findViewById(R.id.txt_turn);
         btn_reset = view.findViewById(R.id.btn_reset);
+        img_stroke = view.findViewById(R.id.img_stroke);
         ArrayList<Bitmap> arrBms = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             arrBms.add(null);
@@ -61,5 +64,6 @@ public class GameFragment extends Fragment {
         chessboardAdapter.notifyDataSetChanged();
         turnO = true;
         txt_turn.setText("turn of O");
+        img_stroke.setImageBitmap(null);
     }
 }

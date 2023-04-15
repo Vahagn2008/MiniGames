@@ -48,12 +48,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tictactoe.findViewById(R.id.TicTacToe);
+        tictactoe=(TextView)findViewById(R.id.TicTacToe);
 
         tictactoe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, StartFragment.class));
+                Intent intent = new Intent(MainActivity.this, StartFragment.class);
+                startActivity(intent);
             }
         });
 

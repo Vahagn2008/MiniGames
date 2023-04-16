@@ -12,6 +12,7 @@ import com.example.minigames.Fragments.StartFragment;
 public class TicTacToeMainActivity extends AppCompatActivity {
 
     private FrameLayout main_frame;
+    public  static int scoreX = 0, scoreO = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

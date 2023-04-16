@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.minigames.ChessboardAdapter;
@@ -25,9 +26,11 @@ public class GameFragment extends Fragment {
     private RecyclerView rv_chessboard;
     private ChessboardAdapter chessboardAdapter;
     public static boolean turnO = true;
-    public static TextView txt_turn;
-    private Button btn_reset;
-    public static ImageView img_stroke;
+    public static TextView txt_turn, txt_win_x, txt_win_o, txt_win;
+    private Button btn_reset, btn_again, btn_home;
+    public static ImageView img_stroke, img_win;
+    public static RelativeLayout rl_win;
+    public  static String TAG = GameFragment.class.getName();
 
 
     @Override
@@ -37,7 +40,14 @@ public class GameFragment extends Fragment {
         rv_chessboard = view.findViewById(R.id.rv_chessboard);
         txt_turn = view.findViewById(R.id.txt_turn);
         btn_reset = view.findViewById(R.id.btn_reset);
+        btn_again = view.findViewById(R.id.btn_again);
+        btn_home = view.findViewById(R.id.btn_home);
         img_stroke = view.findViewById(R.id.img_stroke);
+        rl_win = view.findViewById(R.id.rl_win);
+        txt_win_x = view.findViewById(R.id.txt_win_x);
+        txt_win_o = view.findViewById(R.id.txt_win_o);
+        txt_win = view.findViewById(R.id.txt_win);
+        img_win = view.findViewById(R.id.img_win);
         ArrayList<Bitmap> arrBms = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             arrBms.add(null);
@@ -50,6 +60,20 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 reset();
+            }
+        });
+        btn_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rl_win.setVisibility(view.INVISIBLE);
+                reset();
+            }
+        });
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reset();
+                getFragmentManager().popBackStack();
             }
         });
         return view;

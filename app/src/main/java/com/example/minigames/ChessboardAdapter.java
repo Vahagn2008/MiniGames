@@ -1,5 +1,6 @@
 package com.example.minigames;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,14 +22,16 @@ import java.util.ArrayList;
 public class ChessboardAdapter  extends RecyclerView.Adapter<ChessboardAdapter.ViewHolder>{
     private Context context;
     private ArrayList<Bitmap> arrBms, arrStrokes;
-    private Bitmap bmX,bmO;
-    private Animation anim_x_o, anim_stroke;
+    private Bitmap bmX, bmO, draw;
+    private Animation anim_x_o, anim_stroke, anim_win;
+    private String winCharacter = "o";
 
     public ChessboardAdapter(Context context, ArrayList<Bitmap> arrBms) {
         this.context = context;
         this.arrBms = arrBms;
         bmO = BitmapFactory.decodeResource(context.getResources(), R.drawable.o);
         bmX = BitmapFactory.decodeResource(context.getResources(), R.drawable.x);
+        draw = BitmapFactory.decodeResource(context.getResources(), R.drawable.draw);
         arrStrokes = new ArrayList<>();
         arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke1));
         arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke2));
@@ -40,6 +43,7 @@ public class ChessboardAdapter  extends RecyclerView.Adapter<ChessboardAdapter.V
         arrStrokes.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.stroke8));
         anim_stroke = AnimationUtils.loadAnimation(context, R.anim.anim_stroke);
         GameFragment.img_stroke.setAnimation(anim_stroke);
+        anim_win = AnimationUtils.loadAnimation(context, R.anim.anim_win);
     }
 
     @NonNull
@@ -49,7 +53,7 @@ public class ChessboardAdapter  extends RecyclerView.Adapter<ChessboardAdapter.V
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.img_cell_chessboard.setImageBitmap(arrBms.get(position));
         anim_x_o = AnimationUtils.loadAnimation(context, R.anim.anim_x_o);
         holder.img_cell_chessboard.setAnimation(anim_x_o);
@@ -74,39 +78,86 @@ public class ChessboardAdapter  extends RecyclerView.Adapter<ChessboardAdapter.V
                 }
             }
         });
+        if (!checkwin()){
+            checkDraw();
+        }
+    }
+
+    private void checkDraw() {
+        int count = 0;
+        for (int i = 0; i < arrBms.size(); i++){
+            if (arrBms.get(i)!=null){
+                count++;
+            }
+        }
+        if (count==9){
+            GameFragment.rl_win.setVisibility(View.VISIBLE);
+            GameFragment.rl_win.setAnimation(anim_win);
+            GameFragment.img_win.setImageBitmap(draw);
+            GameFragment.txt_win.setText("draw");
+        }
     }
 
     private void win() {
         GameFragment.img_stroke.startAnimation(anim_stroke);
+        GameFragment.rl_win.setAnimation(anim_win);
+        GameFragment.rl_win.setVisibility(View.VISIBLE);
+        GameFragment.rl_win.startAnimation(anim_win);
+        if (winCharacter.equals("o")) {
+            GameFragment.img_win.setImageBitmap(bmO);
+            TicTacToeMainActivity.scoreO++;
+            GameFragment.txt_win_o.setText("O: "+TicTacToeMainActivity.scoreO);
+        }else {
+            GameFragment.img_win.setImageBitmap(bmX);
+            TicTacToeMainActivity.scoreX++;
+            GameFragment.txt_win_x.setText("X: "+TicTacToeMainActivity.scoreX);
+        }
+        GameFragment.txt_win.setText("win");
     }
 
     private boolean checkwin() {
         if (arrBms.get(0)==arrBms.get(3)&&arrBms.get(3)==arrBms.get(6)&&arrBms.get(0)!=null){
             GameFragment.img_stroke.setImageBitmap(arrStrokes.get(2));
+            checkwinCharacter(0);
             return true;
         }else if (arrBms.get(1)==arrBms.get(4)&&arrBms.get(4)==arrBms.get(7)&&arrBms.get(1)!=null){
             GameFragment.img_stroke.setImageBitmap(arrStrokes.get(3));
+            checkwinCharacter(1);
             return true;
         }else if (arrBms.get(2)==arrBms.get(5)&&arrBms.get(5)==arrBms.get(8)&&arrBms.get(2)!=null){
             GameFragment.img_stroke.setImageBitmap(arrStrokes.get(4));
+            checkwinCharacter(2);
             return true;
         }else if (arrBms.get(0)==arrBms.get(1)&&arrBms.get(1)==arrBms.get(2)&&arrBms.get(0)!=null){
             GameFragment.img_stroke.setImageBitmap(arrStrokes.get(5));
+            checkwinCharacter(0);
             return true;
         }else if (arrBms.get(3)==arrBms.get(4)&&arrBms.get(4)==arrBms.get(5)&&arrBms.get(3)!=null){
             GameFragment.img_stroke.setImageBitmap(arrStrokes.get(6));
+            checkwinCharacter(3);
             return true;
         }else if (arrBms.get(6)==arrBms.get(7)&&arrBms.get(7)==arrBms.get(8)&&arrBms.get(6)!=null){
             GameFragment.img_stroke.setImageBitmap(arrStrokes.get(7));
+            checkwinCharacter(6);
             return true;
         }else if (arrBms.get(0)==arrBms.get(4)&&arrBms.get(4)==arrBms.get(8)&&arrBms.get(0)!=null){
             GameFragment.img_stroke.setImageBitmap(arrStrokes.get(1));
+            checkwinCharacter(0);
             return true;
         }else if (arrBms.get(2)==arrBms.get(4)&&arrBms.get(4)==arrBms.get(6)&&arrBms.get(2)!=null){
             GameFragment.img_stroke.setImageBitmap(arrStrokes.get(0));
+            checkwinCharacter(2);
             return true;
         }
         return false;
+    }
+
+    private void checkwinCharacter(int i) {
+        if (arrBms.get(i)==bmO){
+            winCharacter = "o";
+        }else {
+            winCharacter = "x";
+        }
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.minigames.R;
+import com.example.minigames.TicTacToeMainActivity;
 
 
 public class StartFragment extends Fragment {
@@ -26,6 +27,9 @@ public class StartFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                TicTacToeMainActivity.scoreO = 0;
+                TicTacToeMainActivity.scoreX = 0;
+                transaction.addToBackStack(GameFragment.TAG);
                 transaction.replace(R.id.main_frame, new GameFragment());
                 transaction.commit();
             }

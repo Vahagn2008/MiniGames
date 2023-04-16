@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tictactoe=(TextView)findViewById(R.id.TicTacToe);
+        tictactoe=(TextView) findViewById(R.id.TicTacToe);
 
         tictactoe.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
 

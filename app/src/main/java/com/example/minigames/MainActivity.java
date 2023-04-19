@@ -22,12 +22,22 @@ public class MainActivity extends AppCompatActivity {
     Button logout;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    TextView tictactoe;
+    TextView TicTacToe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TicTacToe=(TextView) findViewById(R.id.TicTacToe);
+
+        TicTacToe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TicTacToeMainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         logout = findViewById(R.id.logout);
 
@@ -48,15 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tictactoe=(TextView) findViewById(R.id.TicTacToe);
 
-        tictactoe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, StartFragment.class);
-                startActivity(intent);
-            }
-        });
 
 
     }
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 finish();
-                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
     }

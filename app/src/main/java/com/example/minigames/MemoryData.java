@@ -11,6 +11,16 @@ import java.io.InputStreamReader;
 
 public class MemoryData {
 
+    public static void saveData(String data, Context context) {
+        try{
+            FileOutputStream fileOutputStream = context.openFileOutput("datata..txt", Context.MODE_PRIVATE);
+            fileOutputStream.write(data.getBytes());
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void saveLastMsgTs(String data, String chatId, Context context) {
         try{
             FileOutputStream fileOutputStream = context.openFileOutput(chatId+".txt", Context.MODE_PRIVATE);

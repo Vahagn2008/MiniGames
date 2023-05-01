@@ -2,18 +2,18 @@ package com.example.minigames.chat;
 
 public class ChatList {
 
-    private String mobile, name, message, date, time;
+    private String email, name, message, date, time;
 
     public ChatList(String mobile, String name, String message, String date, String time) {
-        this.mobile = mobile;
+        this.email = email;
         this.name = name;
         this.message = message;
         this.date = date;
         this.time = time;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getEmail() {
+        return email;
     }
 
     public String getName() {

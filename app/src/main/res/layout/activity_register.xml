@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_person"
@@ -43,6 +43,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
 
@@ -69,28 +70,6 @@
 
 
     <EditText
-        android:id="@+id/r_mobile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_bg"
-        android:drawableLeft="@drawable/ic_phone"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Phone number"
-        android:inputType="text"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/inputEmail"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/inputEmail"
-        app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
-
-    <EditText
         android:id="@+id/inputPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -111,7 +90,7 @@
         app:layout_constraintEnd_toEndOf="@+id/inputEmail"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/inputEmail"
-        app:layout_constraintTop_toBottomOf="@+id/r_mobile" />
+        app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
 
     <EditText
         android:id="@+id/inputConformPassword"

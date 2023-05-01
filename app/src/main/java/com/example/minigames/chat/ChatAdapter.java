@@ -19,12 +19,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     private List<ChatList> chatListList;
     private final Context context;
-    private String userMobile;
+    private String userEmail;
 
     public ChatAdapter(List<ChatList> chatListList, Context context) {
         this.chatListList = chatListList;
         this.context = context;
-        this.userMobile = MemoryData.getData(context);
+        this.userEmail = MemoryData.getData(context);
     }
 
     @NonNull
@@ -38,7 +38,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
         ChatList list2 = chatListList.get(position);
 
-        if (list2.getMobile().equals(userMobile)){
+        if (list2.getEmail().equals(userEmail)){
             holder.myLayout.setVisibility(View.VISIBLE);
             holder.oppoLayout.setVisibility(View.GONE);
 

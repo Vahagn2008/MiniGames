@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minigames.chat.Chat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     TextView btn;
 
-    private EditText inputUsername,inputPassword,inputEmail,inputConformPassword, r_mobile;
+    private EditText inputUsername,inputPassword,inputEmail,inputConformPassword;
     Button btnRegister;
     private FirebaseAuth mAuth;
     private ProgressDialog mLoadingBar;
@@ -57,7 +58,6 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mLoadingBar = new ProgressDialog(RegisterActivity.this);
 
-        r_mobile = findViewById(R.id.r_mobile);
 
         btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener((new View.OnClickListener() {
@@ -84,7 +84,6 @@ public class RegisterActivity extends AppCompatActivity {
             String email = inputEmail.getText().toString();
             String password = inputPassword.getText().toString();
             String conformPassword = inputConformPassword.getText().toString();
-            String mobileTxt = r_mobile.getText().toString();
 
             if (username.isEmpty())
             {
@@ -94,11 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
             else if (email.isEmpty() || !email.contains("@"))
             {
                 showError(inputEmail, "Email is not valid");
-                progressDialog.dismiss();
-            }
-            else if (mobileTxt.isEmpty())
-            {
-                showError(r_mobile, "Phone number is not valid");
                 progressDialog.dismiss();
             }
             else if (password.isEmpty() || password.length()<7)
@@ -113,47 +107,34 @@ public class RegisterActivity extends AppCompatActivity {
             }
             else
             {
-                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        progressDialog.dismiss();
-
-                        if (snapshot.child("users").hasChild(mobileTxt)){
-                            Toast.makeText(RegisterActivity.this, "Mobile already exists", Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            databaseReference.child("users").child(mobileTxt).child("email").setValue(email);
-                            databaseReference.child("users").child(mobileTxt).child("name").setValue(username);
-
-                            // save mobile to memory
-                            MemoryData.saveData(mobileTxt, RegisterActivity.this);
-
-                            Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.putExtra("mobile", mobileTxt);
-                            intent.putExtra("name", username);
-                            intent.putExtra("email", email);
-                            startActivity(intent);
-                            finish();
-                            // save name to memory
-                            MemoryData.saveName(username, RegisterActivity.this);
-                            Toast.makeText(RegisterActivity.this, "Success", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                        progressDialog.dismiss();
-                    }
-                });
 
                 mLoadingBar.setTitle("Registration");
                 mLoadingBar.setMessage("Please wait, while check your credentials");
                 mLoadingBar.setCanceledOnTouchOutside(false);
                 mLoadingBar.show();
 
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+
+                        if (snapshot.child("users").hasChild(email)){
+                            Toast.makeText(RegisterActivity.this, "Mobile already exists", Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            databaseReference.child("users").child(email).child("email").setValue(email);
+                            databaseReference.child("users").child(email).child("name").setValue(username);
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
                 mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -162,7 +143,19 @@ public class RegisterActivity extends AppCompatActivity {
                         {
                             Toast.makeText(RegisterActivity.this, "Successfully Registration", Toast.LENGTH_LONG).show();
 
+                            // save mobile to memory
+                            MemoryData.saveData(email, RegisterActivity.this);
+
                             mLoadingBar.dismiss();
+                            Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("name", username);
+                            intent.putExtra("email", email);
+                            startActivity(intent);
+                            finish();
+                            // save name to memory
+                            MemoryData.saveName(username, RegisterActivity.this);
+
 
                         }
                         else

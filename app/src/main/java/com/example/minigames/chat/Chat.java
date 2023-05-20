@@ -138,7 +138,7 @@ public class Chat extends AppCompatActivity {
                 databaseReference.child("chat").child(chatKey).child("user_1").setValue(getUserEmail);
                 databaseReference.child("chat").child(chatKey).child("user_2").setValue(getEmail);
                 databaseReference.child("chat").child(chatKey).child("messages").child(currentTimesTamp).child("msg").setValue(getTxtMessage);
-                databaseReference.child("chat").child(chatKey).child("messages").child(currentTimesTamp).child("mobile").setValue(getUserEmail);
+                databaseReference.child("chat").child(chatKey).child("messages").child(currentTimesTamp).child("email").setValue(getUserEmail);
 
                 // clear edit text
                 messageEditText.setText("");

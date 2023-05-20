@@ -45,9 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading...");
 
-        // check is user already logged in
 
 
         btn = findViewById(R.id.AlreadyHaveAccount);
@@ -120,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                         if (snapshot.child("users").hasChild(email)){
-                            Toast.makeText(RegisterActivity.this, "Mobile already exists", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this, "Email already exists", Toast.LENGTH_LONG).show();
                         }
                         else{
                             databaseReference.child("users").child(email).child("email").setValue(email);

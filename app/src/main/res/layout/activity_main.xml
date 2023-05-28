@@ -52,5 +52,18 @@
         app:layout_constraintTop_toBottomOf="@+id/TicTacToe"
         tools:layout_editor_absoluteX="105dp" />
 
+    <Button
+        android:id="@+id/btn_memory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_chat"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="Memory"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/btn_chat"
+        tools:layout_editor_absoluteX="105dp" />
+
 
 </RelativeLayout>

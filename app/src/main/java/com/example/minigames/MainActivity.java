@@ -21,11 +21,12 @@ import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button logout, btnChat;
+    Button logout, btnChat, btnMemory;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     TextView TicTacToe;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnMemory = findViewById(R.id.btn_memory);
+        btnMemory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MemoryMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
         TicTacToe=(TextView) findViewById(R.id.TicTacToe);
 
         TicTacToe.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         logout = findViewById(R.id.logout);
 

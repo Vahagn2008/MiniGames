@@ -295,7 +295,7 @@ public class MemoryMainActivity extends AppCompatActivity {
             if (turn == 1) {
                 playerPoints++;
                 tv_p1.setText("P1: " + playerPoints);
-            } else if (turn == 1) {
+            } else if (turn == 2) {
                 cpuPoints++;
                 tv_p2.setText("P2: " + cpuPoints);
             }

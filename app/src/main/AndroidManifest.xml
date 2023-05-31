@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
         <activity
-            android:name=".LoginActivity"
+            android:name=".MemoryMainActivity"
             android:exported="false" />
         <activity
             android:name=".chat.Chat"
@@ -29,7 +29,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MemoryMainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -40,7 +40,7 @@ public class MemoryMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_memory_main);
 
         tv_p1 = (TextView) findViewById(R.id.tv_p1);
-        tv_p1 = (TextView) findViewById(R.id.tv_p1);
+        tv_p2 = (TextView) findViewById(R.id.tv_p2);
 
         iv_11 = (ImageView) findViewById(R.id.iv_11);
         iv_12 = (ImageView) findViewById(R.id.iv_12);
@@ -71,6 +71,8 @@ public class MemoryMainActivity extends AppCompatActivity {
         frontOfCardsResources();
 
         Collections.shuffle(Arrays.asList(cardsArray));
+
+        tv_p2.setTextColor(Color.GRAY);
 
         iv_11.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,8 +317,12 @@ public class MemoryMainActivity extends AppCompatActivity {
 
         if (turn == 1) {
             turn = 2;
+            tv_p1.setTextColor(Color.GRAY);
+            tv_p2.setTextColor(Color.BLACK);
         } else if (turn == 2) {
             turn = 1;
+            tv_p2.setTextColor(Color.GRAY);
+            tv_p1.setTextColor(Color.BLACK);
         }
 
     }

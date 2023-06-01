@@ -1,70 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/white">
+    android:background="@drawable/background_main1">
 
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="200dp"
-        android:backgroundTint="@color/black"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/btn_bg1"
         android:padding="10dp"
         android:text="LogOut"
         android:textColor="@color/white"
         android:textSize="22sp"
-        app:layout_constraintTop_toBottomOf="@+id/btn_chat"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_memory" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/TicTacToe"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="70dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="100dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/btn_bg"
+        android:drawableLeft="@mipmap/ic_tictactoe_foreground"
+        android:drawablePadding="-75dp"
         android:gravity="center"
         android:text="TicTacToe"
         android:textSize="34sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="81dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_chat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
         android:layout_below="@+id/TicTacToe"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="32dp"
+        android:paddingLeft="32dp"
+        android:background="@drawable/btn_bg"
+        android:drawableLeft="@drawable/baseline_chat_24"
+        android:drawablePadding="-50dp"
         android:gravity="center"
         android:text="Chat"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/TicTacToe"
-        tools:layout_editor_absoluteX="105dp" />
+        app:layout_constraintEnd_toEndOf="@+id/TicTacToe"
+        app:layout_constraintStart_toStartOf="@+id/TicTacToe"
+        app:layout_constraintTop_toBottomOf="@+id/TicTacToe" />
 
     <Button
         android:id="@+id/btn_memory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
         android:layout_below="@+id/btn_chat"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/btn_bg"
+        android:drawableLeft="@drawable/ic_memory_left"
+        android:drawablePadding="-40dp"
+        android:paddingLeft="32dp"
         android:gravity="center"
         android:text="Memory"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/btn_chat"
-        tools:layout_editor_absoluteX="105dp" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_chat"
+        app:layout_constraintStart_toStartOf="@+id/btn_chat"
+        app:layout_constraintTop_toBottomOf="@+id/btn_chat" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

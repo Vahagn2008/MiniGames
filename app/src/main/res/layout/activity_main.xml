@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/background_main1">
+    android:background="@drawable/background_main1"
+    tools:context=".MainActivity">
 
 
     <Button
@@ -50,11 +50,11 @@
         android:layout_height="70dp"
         android:layout_below="@+id/TicTacToe"
         android:layout_marginTop="32dp"
-        android:paddingLeft="32dp"
         android:background="@drawable/btn_bg"
         android:drawableLeft="@drawable/baseline_chat_24"
         android:drawablePadding="-50dp"
         android:gravity="center"
+        android:paddingLeft="32dp"
         android:text="Chat"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -71,8 +71,8 @@
         android:background="@drawable/btn_bg"
         android:drawableLeft="@drawable/ic_memory_left"
         android:drawablePadding="-40dp"
-        android:paddingLeft="32dp"
         android:gravity="center"
+        android:paddingLeft="32dp"
         android:text="Memory"
         android:textSize="34sp"
         android:textStyle="bold"

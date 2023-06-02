@@ -2,13 +2,14 @@ package com.example.minigames.messages;
 
 public class MessagesList {
 
-    private String name, email, LastMessage, profilePic, chatKey;
+    private String name, mobile, LastMessage, profilePic, chatKey;
 
     private int unseenMessages;
 
-    public MessagesList(String name, String email, String lastMessage, String profilePic, int unseenMessages, String chatKey) {
+
+    public MessagesList(String name, String mobile, String lastMessage, String profilePic, int unseenMessages, String chatKey) {
         this.name = name;
-        this.email = email;
+        this.mobile = mobile;
         LastMessage = lastMessage;
         this.profilePic = profilePic;
         this.unseenMessages = unseenMessages;
@@ -19,8 +20,8 @@ public class MessagesList {
         return name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMobile() {
+        return mobile;
     }
 
     public String getLastMessage() {

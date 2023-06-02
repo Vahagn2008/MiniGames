@@ -2,11 +2,11 @@ package com.example.minigames.chat;
 
 public class ChatList {
 
-    private String email, name, message, date, time;
+    private String mobile, name, message, date, time;
 
-    public ChatList(String email, String name, String message, String date, String time) {
+    public ChatList(String mobile, String name, String message, String date, String time) {
         this.name = name;
-        this.email = email;
+        this.mobile = mobile;
         this.message = message;
         this.date = date;
         this.time = time;
@@ -16,8 +16,8 @@ public class ChatList {
         return name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMobile() {
+        return mobile;
     }
 
     public String getMessage() {

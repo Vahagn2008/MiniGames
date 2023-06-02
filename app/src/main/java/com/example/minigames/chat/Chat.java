@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Chat extends AppCompatActivity {
 
     private final List<ChatList> chatLists = new ArrayList<>();
-    private String getUserEmail = "";
+    private String getUserMobile = "";
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://minigames-c3d69-default-rtdb.firebaseio.com/");
     private String chatKey;
     private RecyclerView chattingRecyclerView;
@@ -56,8 +56,9 @@ public class Chat extends AppCompatActivity {
         final String getName = getIntent().getStringExtra("name");
         final String getProfilePic = getIntent().getStringExtra("profile_pic");
         chatKey = getIntent().getStringExtra("chat_key");
-        final String getEmail = getIntent().getStringExtra("email");
+        final String getMobile = getIntent().getStringExtra("mobile");
 
+        getUserMobile = MemoryData.getData(Chat.this);
 
         nameTV.setText(getName);
         Picasso.get().load(getProfilePic).into(profilepic);
@@ -87,36 +88,39 @@ public class Chat extends AppCompatActivity {
 
                     for (DataSnapshot messagesSnapshot : snapshot.child("chat").child(chatKey).child("messages").getChildren()) {
 
-                        if (messagesSnapshot.hasChild("msg") && messagesSnapshot.hasChild("email")) {
+                        if (messagesSnapshot.hasChild("msg") && messagesSnapshot.hasChild("mobile")) {
 
                             final String messageTimesTamps = messagesSnapshot.getKey();
-                            final String getEmail = messagesSnapshot.child("email").getValue(String.class);
+                            final String getMobile = messagesSnapshot.child("mobile").getValue(String.class);
                             final String getMsg = messagesSnapshot.child("msg").getValue(String.class);
 
-                            Timestamp timestamp = new Timestamp(Long.parseLong(messageTimesTamps));
-                            Date date = new Date(timestamp.getTime());
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                            SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("hh:mm aa", Locale.getDefault());
-
-                            ChatList chatList = new ChatList(getEmail, getName, getMsg, simpleDateFormat.format(date), simpleTimeFormat.format(date));
-                            chatLists.add(chatList);
-
-                            if (loadingFirstTime || Long.parseLong(messageTimesTamps) > Long.parseLong(MemoryData.getLastMsgTS(Chat.this, chatKey))) {
-
-                                loadingFirstTime = false;
+                            if (Long.parseLong(messageTimesTamps) > Long.parseLong(MemoryData.getLastMsgTS(Chat.this, chatKey))) {
 
                                 MemoryData.saveLastMsgTs(messageTimesTamps, chatKey, Chat.this);
-                                chatAdapter.updateChatList(chatLists);
+                                Timestamp timestamp = new Timestamp(Long.parseLong(messageTimesTamps));
+                                Date date = new Date(timestamp.getTime());
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                                SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("hh:mm aa", Locale.getDefault());
 
-                                chattingRecyclerView.scrollToPosition(chatLists.size() - 1);
+                                ChatList chatList = new ChatList(getMobile, getName, getMsg, simpleDateFormat.format(date), simpleTimeFormat.format(date));
+                                chatLists.add(chatList);
+
+                                if (loadingFirstTime || Long.parseLong(messageTimesTamps) > Long.parseLong(MemoryData.getLastMsgTS(Chat.this, chatKey))) {
+
+                                    loadingFirstTime = false;
+
+                                    MemoryData.saveLastMsgTs(messageTimesTamps, chatKey, Chat.this);
+                                    chatAdapter.updateChatList(chatLists);
+
+                                    chattingRecyclerView.scrollToPosition(chatLists.size() - 1);
+
+                                }
 
                             }
-
                         }
+
                     }
-
                 }
-
             }
 
             @Override
@@ -135,10 +139,11 @@ public class Chat extends AppCompatActivity {
                 final String currentTimesTamp = String.valueOf(System.currentTimeMillis()).substring(0, 10);
                 
 
-                databaseReference.child("chat").child(chatKey).child("user_1").setValue(getUserEmail);
-                databaseReference.child("chat").child(chatKey).child("user_2").setValue(getEmail);
+
+                databaseReference.child("chat").child(chatKey).child("user_1").setValue(getUserMobile);
+                databaseReference.child("chat").child(chatKey).child("user_2").setValue(getMobile);
                 databaseReference.child("chat").child(chatKey).child("messages").child(currentTimesTamp).child("msg").setValue(getTxtMessage);
-                databaseReference.child("chat").child(chatKey).child("messages").child(currentTimesTamp).child("email").setValue(getUserEmail);
+                databaseReference.child("chat").child(chatKey).child("messages").child(currentTimesTamp).child("mobile").setValue(getUserMobile);
 
                 // clear edit text
                 messageEditText.setText("");

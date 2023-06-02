@@ -44,7 +44,7 @@ public class MemoryData {
     public static String getData(Context context) {
         String data = "";
         try{
-            FileInputStream fis = context.openFileInput("nameee.txt");
+            FileInputStream fis = context.openFileInput("datata.txt");
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader bufferedReader = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();

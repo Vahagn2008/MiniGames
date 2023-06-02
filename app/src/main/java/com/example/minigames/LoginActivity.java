@@ -92,9 +92,9 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     showError(inputEmail, "Email is not valid");
                 }
-                else if (password.isEmpty() || password.length()<7)
+                else if (password.isEmpty())
                 {
-                    showError(inputPassword, "Password must be 7 character");
+                    showError(inputPassword, "Password is not valid");
                 }
                 else
                 {

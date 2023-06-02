@@ -26,6 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ChatMainActivity extends AppCompatActivity {
 
     private List<MessagesList> messagesLists = new ArrayList<>();
+    private String mobile;
     private String email;
     private String name;
 
@@ -50,6 +51,7 @@ public class ChatMainActivity extends AppCompatActivity {
         messagesRecyclerView = findViewById(R.id.messagesRecyclerView);
 
         // get intent data from RegisterActivity.class activity
+        mobile = getIntent().getStringExtra("mobile");
         email = getIntent().getStringExtra("email");
         name = getIntent().getStringExtra("name");
 
@@ -70,7 +72,7 @@ public class ChatMainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                final String profilePicUrl = snapshot.child("users").child(email).child("profile_pic").getValue(String.class);
+                final String profilePicUrl = snapshot.child("users").child(mobile).child("profile_pic").getValue(String.class);
 
                 if (!profilePicUrl.isEmpty()) {
                     // set profile pic to circle large view
@@ -97,11 +99,11 @@ public class ChatMainActivity extends AppCompatActivity {
 
                 for (DataSnapshot dataSnapshot : snapshot.child("users").getChildren()) {
 
-                    final String getEmail = dataSnapshot.getKey();
+                    final String getMobile = dataSnapshot.getKey();
 
                     dataset = false;
 
-                    if (!getEmail.equals(email)) {
+                    if (!getMobile.equals(mobile)) {
 
                         final String getName = dataSnapshot.child("name").getValue(String.class);
                         final String getProfilePic = dataSnapshot.child("profile_pic").getValue(String.class);
@@ -123,7 +125,7 @@ public class ChatMainActivity extends AppCompatActivity {
                                             final String getUserOne = dataSnapshot1.child("user_1").getValue(String.class);
                                             final String getUserTwo = dataSnapshot1.child("user_2").getValue(String.class);
 
-                                            if ((getUserOne.equals(getEmail) && getUserTwo.equals(email)) || (getUserOne.equals(email) && getUserTwo.equals(getEmail))) {
+                                        if ((getUserOne.equals(getMobile) && getUserTwo.equals(mobile)) || (getUserOne.equals(mobile) && getUserTwo.equals(getMobile))) {
 
                                                 for (DataSnapshot chatDataSnapshot : dataSnapshot1.child("messages").getChildren()) {
 
@@ -143,7 +145,7 @@ public class ChatMainActivity extends AppCompatActivity {
 
                                 if (!dataset){
                                     dataset = true;
-                                    MessagesList messagesList = new MessagesList(getName, getEmail, lastMessage, getProfilePic, unseemMessages, chatKey);
+                                    MessagesList messagesList = new MessagesList(getName, getMobile, lastMessage, getProfilePic, unseemMessages, chatKey);
                                     messagesLists.add(messagesList);
                                     messagesAdapter.updateData(messagesLists);
                                 }

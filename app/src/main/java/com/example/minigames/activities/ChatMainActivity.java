@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class ChatMainActivity extends AppCompatActivity implements ConversionListener {
+public class ChatMainActivity extends BaseActivity implements ConversionListener {
 
     private ActivityChatMainBinding binding;
     private PreferenceManager preferenceManager;
@@ -134,6 +134,7 @@ public class ChatMainActivity extends AppCompatActivity implements ConversionLis
     }
 
     private void updateToken(String token) {
+        preferenceManager.putString(Constants.KEY_FCM_TOKEN, token);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference =
                 database.collection(Constants.KEY_COLLECTION_USERS).document(

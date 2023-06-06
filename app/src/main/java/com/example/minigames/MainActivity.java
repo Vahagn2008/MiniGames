@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 import com.example.minigames.activities.ChatMainActivity;
 import com.example.minigames.activities.LoginActivity;
 import com.example.minigames.databinding.ActivityChatMainBinding;
+import com.example.minigames.databinding.ActivityMainBinding;
 import com.example.minigames.utilities.Constants;
 import com.example.minigames.utilities.PreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Button logout, btnChat, btnMemory, TicTacToe;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    private ActivityChatMainBinding binding;
+    private ActivityMainBinding binding;
     private PreferenceManager preferenceManager;
 
     @SuppressLint("MissingInflatedId")
@@ -40,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferenceManager = new PreferenceManager(getApplicationContext());
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        loadUserDetails();
 
         btnChat = findViewById(R.id.btn_chat);
         btnChat.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SignOut();
+                signOut();
             }
         });
 
@@ -94,14 +100,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void SignOut() {
+    private void signOut() {
+        Toast.makeText(this, "Signing out...", Toast.LENGTH_SHORT).show();
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference =
+                database.collection(Constants.KEY_COLLECTION_USERS).document(
+                        preferenceManager.getString(Constants.KEY_USER_ID)
+                );
+        HashMap<String, Object> updates = new HashMap<>();
+        updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
+        documentReference.update(updates)
+                .addOnSuccessListener(unused -> {
+                    preferenceManager.clear();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    finish();
+                })
+                .addOnFailureListener(e -> Toast.makeText(this, "Unable to sign out", Toast.LENGTH_SHORT).show());
+    }
 
-        gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
-            }
-        });
+    private void loadUserDetails() {
+        binding.textName.setText(preferenceManager.getString(Constants.KEY_NAME));
+        byte[] bytes = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        binding.imageProfile.setImageBitmap(bitmap);
     }
 }

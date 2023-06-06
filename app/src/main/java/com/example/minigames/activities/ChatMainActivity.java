@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.minigames.MainActivity;
 import com.example.minigames.adapters.RecentConversationAdapter;
 import com.example.minigames.databinding.ActivityChatMainBinding;
 import com.example.minigames.listeners.ConversionListener;
@@ -144,21 +145,8 @@ public class ChatMainActivity extends BaseActivity implements ConversionListener
                 .addOnFailureListener(e -> showToast("Unable to update token"));
     }
     private void signOut() {
-        showToast("Signing out...");
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        DocumentReference documentReference =
-                database.collection(Constants.KEY_COLLECTION_USERS).document(
-                        preferenceManager.getString(Constants.KEY_USER_ID)
-                );
-        HashMap<String, Object> updates = new HashMap<>();
-        updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
-        documentReference.update(updates)
-                .addOnSuccessListener(unused -> {
-                    preferenceManager.clear();
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
-                })
-                .addOnFailureListener(e -> showToast("Unable to sign out"));
     }
 
     @Override

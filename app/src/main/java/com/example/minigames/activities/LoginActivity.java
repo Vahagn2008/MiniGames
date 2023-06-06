@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Toast;
 
+import com.example.minigames.MainActivity;
 import com.example.minigames.databinding.ActivityLoginBinding;
 import com.example.minigames.databinding.ActivityRegisterBinding;
 import com.example.minigames.utilities.Constants;
@@ -25,7 +26,7 @@ private PreferenceManager preferenceManager;
         super.onCreate(savedInstanceState);
         preferenceManager = new PreferenceManager(getApplicationContext());
         if(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
-            Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -59,7 +60,7 @@ private PreferenceManager preferenceManager;
                         preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
                         preferenceManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME));
                         preferenceManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
-                        Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }else {

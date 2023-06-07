@@ -274,6 +274,10 @@ public class ChatActivity extends BaseActivity {
                     preferenceManager.getString(Constants.KEY_USER_ID),
                     receiverUser.id
             );
+            checkForConversionRemotely(
+                    receiverUser.id,
+                    preferenceManager.getString(Constants.KEY_USER_ID)
+            );
         }
     }
 
